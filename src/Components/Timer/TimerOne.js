@@ -66,7 +66,7 @@ export default class TimerOne extends React.Component {
 
   componentWillUnmount() {
     // console.log("Timer componentWillUnmount");
-    if (this.state.time === 10) {
+    if (this.state.time === 10) {                 //
       clearInterval(this.timer);
     }
   }
