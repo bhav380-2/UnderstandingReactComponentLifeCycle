@@ -1,32 +1,29 @@
 import React from "react";
-// import ComponentA from "./ComponentA";
-import TimerOne from "./Components/Timer/TimerOne";
+import TimerOne from "./Components/Timer/TimerOne.js";
 
-class App extends React.Component{
-
-  constructor(){
+class App extends React.Component {
+  constructor() {
     super();
-    this.state={
-      timerOn:false
+
+    this.state = {
+      timerOn: false
     }
   }
 
-  handleTimerOn = ()=>{
-    this.setState((prevState)=>({timerOn:!prevState.timerOn}));
-  }
+  handleTimerOn = () => {
+    this.setState((prevState) => {
+      return {
+        timerOn: !prevState.timerOn
+      }
+    })
+  };
 
-  render(){
+  render() {
     return (
-
       <>
-
-      <TimerOne timerOn = {this.state.timerOn} />
-      <button onClick={this.handleTimerOn}>{this.state.timerOn?"STOP":"START"}</button>
-
-  
-        
+        <TimerOne timerOn={this.state.timerOn}/>
+        <button onClick={this.handleTimerOn}>{this.state.timerOn ? "STOP" : "START"}</button>
       </>
-      
     );
   }
 }

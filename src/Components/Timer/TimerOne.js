@@ -1,76 +1,83 @@
 import React from "react";
 
-export default class Timer extends React.Component{
+export default class TimerOne extends React.Component {
+  constructor() {
+    super();
 
-    constructor(){
-        super();
+    this.state = {
+      time: 0
+    };
 
-        this.state = {
-            time:0
-        }
+    this.timer = null;
 
-        this.timer = null;
+    console.log("constructor")
+  }
 
-        console.log("TimerOne Constructor");
-    }
 
-    static getDerivedStateFromProps(){
-        console.log("TimerOne getDerivedStateFromProps");
-        return null;
-    }
+  componentDidMount() {
+    // console.log("Timer ComponentDidMount");
+    // console.log("_________________________________");
 
-    shouldComponentUpdate(nextProps,nextState){
-        return true;
-    }
+   
+  }
 
+  getSnapshotBeforeUpdate(prevProp, prevState) {
+    // console.log("Timer getSnapshotBeforeUpdate");
+    // console.log("_________________________________");
+    return null;
+  }
+
+  shouldComponentUpdate(nextProps, nextState) {
+    // console.log("Timer shouldComponentUpdate");
+    // console.log("_________________________________");
+
+    console.log(this.state.time)
+
+    return nextProps.timerOn !== this.props.timerOn || nextState.time%5===0;
     
-    render(){
-        console.log("TimerOne render");
-        return(
-                <>
-                  <h1>Time Spent :  </h1>
-                  {new Date(this.state.time*1000).toISOString().slice(11,19)}
-                </>
-            );
-    }
+  }
 
-    componentDidMount(){
-        console.log("TimerOne componentDidMount");
+  componentDidUpdate(prevProps, prevState, snapshot) {
+    // console.log("Timer componentDidUpdate");
+    // console.log("_________________________________");
 
+    if(prevProps.timerOn!== this.props.timerOn){
+
+      console.log(prevProps.timerOn);
+      console.log(this.props.timerOn);
+
+      if(this.props.timerOn){
         this.timer = setInterval(()=>{
-            this.setState((prevState)=>({
-                time:prevState.time+0.5
-            }))
-        },1000);
-
-
-
-
-    }
-
-    getSnapshotBeforeUpdate(prevProps,prevState){
-
-        console.log("TimerOne getSnapshotBeforeUpdate");
-        return null;
-    }
-
-    componentDidUpdate(prevProps,prevState,snapShot){
-        console.log("TimerOne componentDidUpdate");
-        console.log("_______________");
-
-        console.log("Previous props : ",prevProps);
-        console.log("Previous State : ", prevState);
-        console.log("Snapshot from getSnapshotBeforeUpdate: ",snapShot);
-    }
-
-    componentWillUnmount(){
-
+          this.setState((prevState)=>({time: prevState.time+1}))
+        },1000)
+      }else{
         clearInterval(this.timer);
-
+      }
     }
 
+   
 
 
+    // console.log("Previous Props:",prevProps);
+    // console.log("Preavious State: ",prevState);
+    // console.log("Current Props from snapShot: ",snapshot.currentProps);
+    // console.log("Current State from snapShot: ",snapshot.currentState);
+  }
 
+  componentWillUnmount() {
+    // console.log("Timer componentWillUnmount");
+    if (this.state.time === 10) {
+      clearInterval(this.timer);
+    }
+  }
 
+  render() {
+    // console.log("rendered");
+    return (
+      <div>
+        <h2>Time Spent: {this.state.time}</h2>
+        {new Date(this.state.time * 1000).toISOString().slice(11, 19)}
+      </div>
+    );
+  }
 }
